@@ -10,8 +10,9 @@ from src.routers.auth import auth_with_github, invite_people, redeem_email_code,
 from src.routers.github import handle_github_events, submit_review
 from src.routers.onboarding import onboard_github
 from src.routers.payment import create_checkout_session, create_portal_session, handle_stripe_events
+from src.routers.project import get_projects
 from src.routers.support import handle_contact_us
-from src.routers.task import chat_ws, schedule_job
+from src.routers.task import chat_ws, get_tasks, schedule_job
 from src.utils.bootstrap_utils import bootstrap_application_async, create_bootstrap_config
 
 
@@ -56,8 +57,20 @@ app.include_router(handle_stripe_events.router, prefix="/payment")
 # support endpoints
 app.include_router(handle_contact_us.router, prefix="/support")
 
+# payment endpoints
+app.include_router(create_checkout_session.router, prefix="/payment")
+app.include_router(create_portal_session.router, prefix="/payment")
+app.include_router(handle_stripe_events.router, prefix="/payment")
+
+# project endpoints
+app.include_router(get_projects.router, prefix="/project")
+
+# support endpoints
+app.include_router(handle_contact_us.router, prefix="/support")
+
 # task endpoints
 app.include_router(chat_ws.router, prefix="/task")
+app.include_router(get_tasks.router, prefix="/task")
 app.include_router(schedule_job.router, prefix="/task")
 
 
